@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import "tailwindcss";
+
+:root {
+  /* Color */
+  --pink: #ff2a70;
+  --grey: rgba(0, 0, 0, 0.9);
+  --white: #fff; /*eller tailwinds white*/
+
+  /* Font */
+  --font-ubuntu: "Ubuntu", sans-serif;
+
+  /* Active/hover line (linear gradient) 
+  --pinkLine: linear-gradient(90deg, rgba(255, 42, 112, 0), rgba(255, 42, 112, 1) 52%, rgba(255, 42, 112, 0));*/
+}
+
+body {
+  background: black;
+  font-family: var(--font-ubuntu);
+
+  overflow-x: hidden;
+  color: white;
+}
+
+button {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/** Typography **/
+
+h1 {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+h4 {
+  font-size: 0.8rem;
+  color: var(--pink);
+}
+
+p {
+  font-size: 0.8rem;
+  color: white;
+}
+
+/** Forms **/
+/* Før havde vi @apply, hvor man kunne bruge tailwind's styling format/syntax..
+    Dog blev det 'falgged' med warning: Unknown rule
+
+    Hvorfor ikke bare style elementerne i tailwind?
+    En samlet styling for forms på sitet giver bedre/mere konsistens
+      - Vi vil undgå gentagelser for hver form (ift. styling)
+      - Gør det lettere at opdatere styling for (alle) forms
+      - Det gør forms mere overskuelige, hvori layoutet styles i tailwind
+*/
+
+form {
+  color-scheme: dark; /*dette hjalp med at gøre dato ikon hvid*/
+  font-size: 0.8rem;
+  select {
+    cursor: pointer;
+    color-scheme: inherit;
+
+    option {
+      background-color: #262626;
+    }
+  }
+}
+
+/*** General styling for form elements ***/
+/* Form field wrapper */
+.form-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  align-items: center;
+  padding: 0.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.8rem;
+  border: 1px solid white;
+  outline: none;
+
+  label {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  @media (min-width: 640px) {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto;
+  }
+}
+
+/* hover, focus, active */
+.form-field:hover,
+.form-field:focus,
+.form-field:active {
+  border-color: var(--pink);
+}
+
+/* Input fields */
+.form-input {
+  justify-items: stretch;
+  border-bottom: 1px solid black;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  padding-left: 1.25rem;
+  cursor: pointer;
+  outline: none;
+  width: 10rem;
+
+  @media (min-width: 640px) {
+    width: 100%;
+  }
+}
+.is-filled {
+  background-color: #171717;
+}
+.form-input::placeholder {
+  color: white;
+}
+
+/* hover, focus, active */
+.form-input:hover {
+  background-color: #404040;
+}
+.form-input:focus,
+.form-input:active {
+  background-color: #262626;
+}
+
+/* Comment field */
+.form-comment {
+  min-height: 20vh;
+  field-sizing: content !important;
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  text-align: left !important;
+}
+
+/* Submit button */
+.form-button {
+  text-transform: uppercase;
+  place-self: end;
+  padding: 0.5rem;
+  width: 12.5rem;
+  border-width: 2px;
+  border-style: solid;
+  border-color: black;
+  border-top-color: white;
+  border-bottom-color: white;
+  cursor: pointer;
+}
+
+.form-button:hover,
+.form-button:active {
+  color: var(--pink);
+  border-top-color: var(--pink);
+  border-bottom-color: var(--pink);
+}
+
+/* Medium screens (md:) */
+@media (min-width: 768px) {
+  .form-button {
+    grid-column: span 2;
+  }
+}
