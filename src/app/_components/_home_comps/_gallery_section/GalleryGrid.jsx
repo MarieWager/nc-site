@@ -2,7 +2,7 @@ import GalleryItem from "@/app/_components/_home_comps/_gallery_section/GalleryI
 
 // just getting all gallery photos
 async function getGallery() {
-  const res = await fetch("http://localhost:4000/gallery", {
+  const res = await fetch("api/gallery", {
     cache: "no-store",
   });
 

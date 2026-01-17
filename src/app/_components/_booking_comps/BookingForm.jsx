@@ -69,7 +69,7 @@ export default function BookingForm({ selectedTable, onDateChange }) {
     }
 
     async function fetchReservations() {
-      const res = await fetch(`http://localhost:4000/reservations?date=${formDate}`);
+      const res = await fetch(`api/reservations?date=${formDate}`);
       const data = await res.json();
 
       // normalize to strings like "1", "2", ...
@@ -89,7 +89,7 @@ export default function BookingForm({ selectedTable, onDateChange }) {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/reservations", {
+      const response = await fetch("api/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

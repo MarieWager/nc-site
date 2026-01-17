@@ -5,7 +5,7 @@ import Banner from "@/app/_components/Banner";
 const POSTS_PER_PAGE = 3;
 
 async function getBlogPosts() {
-  const res = await fetch("http://localhost:4000/blogposts", {
+  const res = await fetch("api/blogposts", {
     cache: "no-store",
   });
 

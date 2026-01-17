@@ -14,7 +14,7 @@ export default function BlogPostbyId() {
 
   useEffect(() => {
     async function getBlogPostbyId() {
-      const res = await fetch(`http://localhost:4000/blogposts/${id}`, {
+      const res = await fetch(`api/blogposts/${id}`, {
         method: "GET",
       });
 
@@ -22,7 +22,7 @@ export default function BlogPostbyId() {
 
       const post = await res.json();
 
-      const comments = await fetch(`http://localhost:4000/blogposts/${post.id}?embed=comments`);
+      const comments = await fetch(`api/blogposts/${post.id}?embed=comments`);
 
       if (!comments.ok) return { ...post, commentCount: 0 }; /*ved fejl retunere antal kommentare til 0*/
 
@@ -56,7 +56,7 @@ export default function BlogPostbyId() {
     }));
 
     try {
-      const res = await fetch("http://localhost:4000/comments", {
+      const res = await fetch("api/comments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function BlogPostbyId() {
   };
 
   async function getComments() {
-    const res = await fetch(`http://localhost:4000/comments?blogpostId=${id}`);
+    const res = await fetch(`api/comments?blogpostId=${id}`);
     const data = await res.json();
     setComments(data);
   }

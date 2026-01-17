@@ -18,7 +18,7 @@ export default function BookTable() {
       /*tjekker api'et ift. reservationer af tables og dates 
       = nye reservationer kan/må ikke have samme værdier for table og date som en api-reservation allerede har */
     }
-    const checkRes = await fetch(`http://localhost:4000/reservations?date=${data.date}&table=${data.table}`);
+    const checkRes = await fetch(`api/reservations?date=${data.date}&table=${data.table}`);
     const existing = await checkRes.json();
     const existingReservations = existing.length > 0;
     {
@@ -49,7 +49,7 @@ export default function BookTable() {
     console.log(`Reservation for: the ${data.data}, at table ${data.table} with ${data.guests} guests`);
 
     try {
-      const res = await fetch("http://localhost:4000/reservations", {
+      const res = await fetch("api/reservations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -52,7 +52,7 @@ export default function BookTableSection() {
 
     async function fetchReservations() {
       try {
-        const res = await fetch("http://localhost:4000/reservations", {
+        const res = await fetch("api/reservations", {
           cache: "no-store",
         });
 
