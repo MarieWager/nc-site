@@ -11,7 +11,7 @@ export default function Testimonials() {
 
   useEffect(() => {
     async function getTestimonials() {
-      const res = await fetch("api/testimonials", {
+      const res = await fetch("/api/testimonials", {
         method: "GET",
         cache: "no-store",
       });

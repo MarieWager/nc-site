@@ -15,7 +15,7 @@ export default function Events() {
 
   useEffect(() => {
     async function getEvents() {
-      const res = await fetch("api/events", {
+      const res = await fetch("/api/events", {
         method: "GET",
         cache: "no-store",
       });

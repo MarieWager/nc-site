@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Banner from "@/app/_components/Banner";
+import Banner from "./_components/Banner";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -26,7 +26,7 @@ export default function Contact() {
     };
 
     try {
-      const res = await fetch("api/contact_messages", {
+      const res = await fetch("/api/contact_messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

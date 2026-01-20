@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import Banner from "@/app/_components/Banner";
+import Banner from "./Banner";
 
 const POSTS_PER_PAGE = 3;
 
 async function getBlogPosts() {
-  const res = await fetch("api/blogposts", {
+  const res = await fetch("/api/blogposts", {
     cache: "no-store",
   });
 

@@ -9,7 +9,7 @@ export default function RecentBlogs() {
 
   useEffect(() => {
     async function getAllBlogPosts() {
-      const res = await fetch("api/blogposts", {
+      const res = await fetch("/api/blogposts", {
         method: "GET",
         cache: "no-store",
       });
@@ -18,7 +18,7 @@ export default function RecentBlogs() {
 
       const amountComments = await Promise.all(
         blogposts.map(async (post) => {
-          const res = await fetch(`api/blogposts/${post.id}?embed=comments`);
+          const res = await fetch(`/api/blogposts/${post.id}?embed=comments`);
 
           if (!res.ok) return { ...post, commentCount: 0 }; /*ved fejl retunere antal kommentare til 0*/
 

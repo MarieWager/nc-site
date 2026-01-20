@@ -5,9 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import EvAnimation from "@/app/_components/_home_comps/_event_section/EvAnimation";
-import LeftTriangle from "@/app/_components/_ui/LeftTriangle";
-import RightTriangle from "@/app/_components/_ui/RightTriangle";
+import EvAnimation from "../_event_section/EvAnimation";
+import LeftTriangle from "../../_ui/LeftTriangle";
+import RightTriangle from "../../_ui/RightTriangle";
 
 const itemEnter = {
   hidden: { opacity: 0, x: -40 },

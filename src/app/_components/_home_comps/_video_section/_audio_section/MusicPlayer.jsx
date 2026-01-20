@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Volume2, Shuffle } from "lucide-react";
-import LeftTriangle from "@/app/_components/_ui/LeftTriangle";
-import RightTriangle from "@/app/_components/_ui/RightTriangle";
+import LeftTriangle from "../../../_ui/LeftTriangle";
+import RightTriangle from "../../../_ui/RightTriangle";
 
 const TRACKS = [
   {

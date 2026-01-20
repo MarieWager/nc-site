@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Banner from "@/app/_components/Banner";
+import Banner from "./_components/Banner";
 import React from "react";
-import BookingForm from "@/app/_components/_booking_comps/BookingForm";
-import BookTableSection from "@/app/_components/_booking_comps/BookTableSection";
+import BookingForm from "./BookingForm";
+import BookTableSection from "./BookTableSection";
 
 export default function BookTable() {
   const [message, setMessage] = useState("");
@@ -18,7 +18,7 @@ export default function BookTable() {
       /*tjekker api'et ift. reservationer af tables og dates 
       = nye reservationer kan/må ikke have samme værdier for table og date som en api-reservation allerede har */
     }
-    const checkRes = await fetch(`api/reservations?date=${data.date}&table=${data.table}`);
+    const checkRes = await fetch(`/api/reservations?date=${data.date}&table=${data.table}`);
     const existing = await checkRes.json();
     const existingReservations = existing.length > 0;
     {
@@ -49,7 +49,7 @@ export default function BookTable() {
     console.log(`Reservation for: the ${data.data}, at table ${data.table} with ${data.guests} guests`);
 
     try {
-      const res = await fetch("api/reservations", {
+      const res = await fetch("/api/reservations", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
