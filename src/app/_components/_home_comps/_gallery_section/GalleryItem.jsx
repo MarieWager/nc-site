@@ -35,42 +35,28 @@ export default function GalleryItem({ photo, i = 0 }) {
       custom={i}
       className="w-full"
     >
-      <Link
-        href={`/gallery/${photo.id}`}
-        className="relative overflow-hidden w-full aspect-[16/9] block"
-        onMouseEnter={() => setIsActive(true)}
-        onMouseLeave={() => setIsActive(false)}
-      >
+      <Link href={`/gallery/${photo.id}`} className="relative overflow-hidden w-full aspect-[16/9] block" onMouseEnter={() => setIsActive(true)} onMouseLeave={() => setIsActive(false)}>
         {/* Background imag animation*/}
         <EvAnimation
           isActive={isActive}
           animation="bgBlur"
           className="absolute inset-0"
           target={
-            <Image
+            <img src={photo.asset.url} alt={photo.description || "gallery photo"} fill="true" className="object-cover"></img>
+            /* <Image
               src={photo.asset.url}
               alt={photo.description || "gallery photo"}
               fill
               className="object-cover"
-            />
+            />*/
           }
         />
 
         {/* left triangle */}
-        <EvAnimation
-          isActive={isActive}
-          animation="textwrap"
-          className="absolute inset-0 z-20 pointer-events-none"
-          target={<LeftTriangle />}
-        />
+        <EvAnimation isActive={isActive} animation="textwrap" className="absolute inset-0 z-20 pointer-events-none" target={<LeftTriangle />} />
 
         {/* right triangle */}
-        <EvAnimation
-          isActive={isActive}
-          animation="textwrap"
-          className="absolute inset-0 z-20 pointer-events-none"
-          target={<RightTriangle />}
-        />
+        <EvAnimation isActive={isActive} animation="textwrap" className="absolute inset-0 z-20 pointer-events-none" target={<RightTriangle />} />
       </Link>
     </motion.div>
   );

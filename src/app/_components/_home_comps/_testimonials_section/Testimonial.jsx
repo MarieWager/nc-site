@@ -11,14 +11,15 @@ export default function Testimonials() {
 
   useEffect(() => {
     async function getTestimonials() {
-      const res = await fetch("/api/testimonials", {
-        method: "GET",
-        cache: "no-store",
-      });
-      if (!res.ok) throw new Error("Testimonials failed to load");
+      try {
+        const res = await fetch("/api/testimonials");
+        if (!res.ok) console.log("Testimonials failed to load");
 
-      const data = await res.json();
-      setTestimonials(data);
+        const response = await res.json();
+        setTestimonials(response.data ?? []);
+      } catch (error) {
+        console.error("Error fetching testimonials:", error);
+      }
     }
     getTestimonials();
   }, []);
@@ -52,7 +53,7 @@ export default function Testimonials() {
         <Image src="/footerbg.webp" alt="People dancing" width={1600} height={1600} className="h-full w-fit lg:w-full brightness-20 object-cover z-0 row-start-1 row-end-2 col-start-1 col-end-2" />
 
         <main key={person.id} className="flex flex-col max-w-6xl mx-auto place-items-center justify-items-center text-center gap-3 p-15 md:p-20 lg:px-40 z-100 row-start-1 row-end-2 col-start-1 col-end-2">
-          <Image src={person.asset.url} alt={`Club Guest: ${person.name}`} width={100} height={100} />
+          <img src={person.asset.url} alt={`Club Guest: ${person.name}`} width={100} height={100} />
           <h2>{person.name}</h2>
           <p className="text-pretty line-clamp-3">{person.content}</p>
 

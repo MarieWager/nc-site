@@ -69,12 +69,16 @@ export default function BookingForm({ selectedTable, onDateChange }) {
     }
 
     async function fetchReservations() {
-      const res = await fetch(`/api/reservations?date=${formDate}`);
-      const data = await res.json();
+      try {
+        const res = await fetch(`/api/reservations`);
+        const data = await res.json();
 
-      // normalize to strings like "1", "2", ...
-      const taken = data.map((r) => String(r.table));
-      setReservedTables(taken);
+        // Filter by selected date and normalize to strings
+        const taken = data.filter((r) => r.date.startsWith(formDate)).map((r) => String(r.table));
+        setReservedTables(taken);
+      } catch (error) {
+        console.error("Error fetching reservations:", error);
+      }
     }
 
     fetchReservations();
@@ -126,39 +130,19 @@ export default function BookingForm({ selectedTable, onDateChange }) {
         {/* Name */}
         <div className="form-field">
           <label htmlFor="name">Your Name</label>
-          <input
-            id="name"
-            required
-            type="text"
-            placeholder="Britney Spears"
-            className="form-input"
-            {...register("name", { required: true })}
-          />
+          <input id="name" required type="text" placeholder="Britney Spears" className="form-input" {...register("name", { required: true })} />
         </div>
 
         {/* Email */}
         <div className="form-field">
           <label htmlFor="email">Your Email</label>
-          <input
-            id="email"
-            required
-            type="email"
-            placeholder="mail@gmail.com"
-            className="form-input"
-            {...register("email", { required: true })}
-          />
+          <input id="email" required type="email" placeholder="mail@gmail.com" className="form-input" {...register("email", { required: true })} />
         </div>
 
         {/* Table Number */}
         <div className="form-field">
           <label htmlFor="table">Table Number</label>
-          <select
-            required
-            id="table"
-            defaultValue=""
-            className="form-input"
-            {...register("table", { required: true })}
-          >
+          <select required id="table" defaultValue="" className="form-input" {...register("table", { required: true })}>
             <option value="" disabled>
               1 - 15
             </option>
@@ -169,19 +153,12 @@ export default function BookingForm({ selectedTable, onDateChange }) {
             {/* options/tables generated via TABLES and disabled if reserved */}
             {TABLES.map((t) => (
               <option key={t.id} value={t.id} disabled={reservedTables.includes(t.id)}>
-                Table {t.id}{" "}
-                {reservedTables.includes(t.id)
-                  ? "(not available this date)"
-                  : `(max ${t.maxGuests} guests)`}
+                Table {t.id} {reservedTables.includes(t.id) ? "(not available this date)" : `(max ${t.maxGuests} guests)`}
               </option>
             ))}
           </select>
 
-          {tableMaxGuests && formGuests > tableMaxGuests && (
-            <b className="text-[0.70rem] font-thin col-span-2">
-              This table allows max {tableMaxGuests} guests.
-            </b>
-          )}
+          {tableMaxGuests && formGuests > tableMaxGuests && <b className="text-[0.70rem] font-thin col-span-2">This table allows max {tableMaxGuests} guests.</b>}
         </div>
 
         {/* Number of Guests */}
@@ -197,62 +174,33 @@ export default function BookingForm({ selectedTable, onDateChange }) {
             {...register("guests", {
               required: true,
               valueAsNumber: true,
-              validate: (v) =>
-                !tableMaxGuests ||
-                v <= tableMaxGuests ||
-                `Max ${tableMaxGuests} guests for this table`,
+              validate: (v) => !tableMaxGuests || v <= tableMaxGuests || `Max ${tableMaxGuests} guests for this table`,
             })}
           />
           {/* validation error from react-hook-form */}
-          {errors.guests && (
-            <b className="text-[0.70rem] font-thin col-span-2">
-              {String(errors.guests.message)}
-            </b>
-          )}
+          {errors.guests && <b className="text-[0.70rem] font-thin col-span-2">{String(errors.guests.message)}</b>}
         </div>
 
         {/* Date */}
         <div className="form-field">
           <label htmlFor="date">Select Date *</label>
-          <input
-            required
-            id="date"
-            type="date"
-            className="form-input"
-            {...register("date", { required: true })}
-          />
+          <input required id="date" type="date" className="form-input" {...register("date", { required: true })} />
         </div>
 
         {/* Phone */}
         <div className="form-field">
           <label htmlFor="phone">Your Mobile Number</label>
-          <input
-            id="phone"
-            required
-            type="tel"
-            placeholder="12 34 56 78"
-            className="form-input"
-            {...register("phone", { required: true })}
-          />
+          <input id="phone" required type="tel" placeholder="12 34 56 78" className="form-input" {...register("phone", { required: true })} />
         </div>
 
         {/* Comment */}
         <div className="form-field md:col-span-2">
           <label htmlFor="comment">Your Comment</label>
-          <textarea
-            id="comment"
-            className="form-input"
-            {...register("comment", { maxLength: 250 })}
-          />
+          <textarea id="comment" className="form-input" {...register("comment", { maxLength: 250 })} />
         </div>
 
         {/* Submit */}
-        <input
-          className="form-button md:col-span-2"
-          type="submit"
-          value="reserve"
-          disabled={tableMaxGuests && formGuests > tableMaxGuests}
-        />
+        <input className="form-button md:col-span-2" type="submit" value="reserve" disabled={tableMaxGuests && formGuests > tableMaxGuests} />
       </form>
     </main>
   );

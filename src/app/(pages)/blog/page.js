@@ -1,20 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
-import Banner from "./Banner";
+import Banner from "../../_components/Banner";
+import { supabaseServer } from "../../lib/supabaseServer";
 
 const POSTS_PER_PAGE = 3;
 
 async function getBlogPosts() {
-  const res = await fetch("/api/blogposts", {
-    cache: "no-store",
-  });
+  try {
+    const { data, error } = await supabaseServer.from("blogposts").select("id,title,author,content,asset,date").order("id", { ascending: false });
 
-  if (!res.ok) {
-    throw new Error("Could not fetch blogposts");
+    if (error) {
+      console.log("Error fetching blogposts:", error);
+      return [];
+    }
+
+    return data || [];
+  } catch (err) {
+    console.error("Error fetching blogposts:", err);
+    return [];
   }
-
-  const data = await res.json();
-  return data;
 }
 
 export default async function BlogPage(props) {
@@ -52,7 +56,7 @@ export default async function BlogPage(props) {
               <article key={post.id} className="md:grid md:grid-cols-2 gap-8 items-center">
                 {/* IMAGE side */}
                 <div className={`relative w-full aspect-[16/9] overflow-hidden ${isOdd ? "md:order-2" : ""}`}>
-                  <Image src={post.asset.url} alt={post.title} fill className="object-cover" />
+                  <img src={post.asset.url} alt={post.title} fill="true" className="object-cover" />
                 </div>
 
                 {/* TEXT side */}

@@ -15,13 +15,18 @@ export default function Events() {
 
   useEffect(() => {
     async function getEvents() {
-      const res = await fetch("/api/events", {
-        method: "GET",
-        cache: "no-store",
-      });
-      if (!res.ok) throw new Error("Events failed to load");
-      const events = await res.json();
-      setEvent(events);
+      try {
+        const res = await fetch("/api/events")
+       
+        if (!res.ok) console.log("Events failed to load");
+        
+        const events = await res.json();
+
+        setEvent(events.data ?? []);
+
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
     }
     getEvents();
   }, []);
@@ -53,8 +58,9 @@ export default function Events() {
         {visibleEvents.map((event) => (
           <main key={event.id} className="grid grid-cols-1 grid-rows-[auto] max-w-7xl" onPointerEnter={() => setActiveId(event.id)} onPointerLeave={() => setActiveId(null)} onPointerDown={() => setActiveId((prev) => (prev === event.id ? null : event.id))} onFocus={() => setActiveId(event.id)} onBlur={() => setActiveId(null)} tabIndex={0}>
             <section className="grid grid-cols-1 grid-rows-1">
-              <EvAnimation isActive={activeId === event.id} className="h-full w-full border-y-transparent border-[#FF2A70] row-start-1 col-start-1" animation="bgBlur" target={<Image src={event.asset.url} alt={event.title} width={1600} height={1400} className="h-full w-full object-cover pointer-events-none" />}></EvAnimation>
-
+              {" "}
+              {/* <Image src={event.asset.url} alt={event.title} width={1600} height={1400} className="h-full w-full object-cover pointer-events-none" /> */}
+              <EvAnimation isActive={activeId === event.id} className="h-full w-full border-y-transparent border-[#FF2A70] row-start-1 col-start-1" animation="bgBlur" target={<img src={event.asset.url} alt={event.title} width={1600} height={1400} className="h-full w-full object-cover pointer-events-none" />}></EvAnimation>
               {/*overlay*/}
               <article className="grid grid-cols-1 grid-rows-[0.3fr_auto_0.3fr] row-start-1 col-start-1">
                 {/*top border*/}
@@ -62,7 +68,7 @@ export default function Events() {
 
                 {/*left tri*/}
                 <EvAnimation isActive={activeId === event.id} className="border-r-transparent border-t-[#FF2A70] place-self-start row-start-1 col-start-1" animation="triLeftGrow" target={<div className="place-self-end border-[#FF2A70]"></div>}></EvAnimation>
-               
+
                 {/*button*/}
                 <EvAnimation
                   isActive={activeId === event.id}

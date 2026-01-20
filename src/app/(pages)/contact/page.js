@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Banner from "./_components/Banner";
+import Banner from "../../_components/Banner";
 import React from "react";
 import { useForm } from "react-hook-form";
 

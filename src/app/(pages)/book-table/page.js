@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Banner from "./_components/Banner";
 import React from "react";
-import BookingForm from "./BookingForm";
-import BookTableSection from "./BookTableSection";
+import Banner from "../../_components/Banner";
+import BookingForm from "../../_components/_booking_comps/BookingForm";
+import BookTableSection from "../../_components/_booking_comps/BookTableSection";
 
 export default function BookTable() {
   const [message, setMessage] = useState("");

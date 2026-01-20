@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import Banner from "@/app/_components/Banner";
+import Banner from "../../../_components/Banner";
 import React from "react";
-import CommentForm from "@/app/_components/_blog_comps/commentForms";
+import CommentForm from "../../../_components/_blog_comps/commentForms";
 
 export default function BlogPostbyId() {
   const { id } = useParams();
@@ -14,29 +14,23 @@ export default function BlogPostbyId() {
 
   useEffect(() => {
     async function getBlogPostbyId() {
-      const res = await fetch(`/api/blogposts/${id}`, {
-        method: "GET",
-      });
+      const res = await fetch(`/api/blogposts/${id}`);
 
-      if (!res.ok) throw new Error("Blog Post failed to load");
+      if (!res.ok) {
+        console.log("Blog Post failed to load");
+        return;
+      }
 
       const post = await res.json();
-
-      const comments = await fetch(`/api/blogposts/${post.id}?embed=comments`);
-
-      if (!comments.ok) return { ...post, commentCount: 0 }; /*ved fejl retunere antal kommentare til 0*/
-
-      const postIdComments = await comments.json();
-
       setPost({
         ...post,
-        comments: postIdComments.comments ?? [],
-        commentCount: postIdComments.comments?.length ?? 0 /*antal af comments retuneres, hvis de findes ellers = undefinded = ??=fallback retunere 0*/,
+        commentCount: 0,
+        comments: [],
       });
     }
-    getBlogPostbyId();
 
     if (!id) return;
+    getBlogPostbyId();
     getComments();
   }, [id]);
 
@@ -86,7 +80,7 @@ export default function BlogPostbyId() {
       <Banner title="blog post"></Banner>
       <main className="grid grid-cols-1 grid-rows[auto] gap-3 max-w-7xl mx-auto px-4 py-8 md:p-10 lg:px-20">
         <section key={post.id} className="flex flex-col">
-          <Image src={post.asset.url} alt={post.title} width={1600} height={1400}></Image>
+          <img src={post.asset.url} alt={post.title} width={1600} height={1400}></img>
 
           <h1 className="text-pretty">{post.title}</h1>
 

@@ -52,9 +52,7 @@ export default function BookTableSection() {
 
     async function fetchReservations() {
       try {
-        const res = await fetch("/api/reservations", {
-          cache: "no-store",
-        });
+        const res = await fetch("/api/reservations");
 
         if (!res.ok) {
           console.error("Could not fetch reservations");
@@ -64,14 +62,10 @@ export default function BookTableSection() {
         const data = await res.json();
 
         // check only reservations that match the selected date
-        const reservedForDate = data.filter((reservation) =>
-          reservation.date.startsWith(selectedDate)
-        );
+        const reservedForDate = data.filter((reservation) => reservation.date.startsWith(selectedDate));
 
         // table numbers
-        const reservedTables = reservedForDate.map((reservation) =>
-          Number(reservation.table)
-        );
+        const reservedTables = reservedForDate.map((reservation) => Number(reservation.table));
 
         setBookedTables(reservedTables);
       } catch (error) {
@@ -91,8 +85,7 @@ export default function BookTableSection() {
 
   // limit visible tables on mobile
   const allTables = Array.from({ length: 15 }, (_, i) => i + 1);
-  const visibleTables =
-    !isMobile ? allTables : showAllTables ? allTables : allTables.slice(0, 8);
+  const visibleTables = !isMobile ? allTables : showAllTables ? allTables : allTables.slice(0, 8);
 
   return (
     <section className="space-y-10 max-w-6xl mx-auto">
@@ -115,12 +108,7 @@ export default function BookTableSection() {
                 ${selectedTable === tableNo ? "ring-2 ring-[var(--pink)]" : ""}
                 ${isBooked ? "opacity-40 cursor-not-allowed" : ""}`}
             >
-              <Image
-                src={imgSrc}
-                alt={`Table ${tableNo}`}
-                fill
-                className="object-contain"
-              />
+              <Image src={imgSrc} alt={`Table ${tableNo}`} fill className="object-contain" />
 
               <span
                 className="absolute inset-0 flex items-center justify-center
@@ -136,11 +124,7 @@ export default function BookTableSection() {
       {/* show all tables button for mobile */}
       {!showAllTables && (
         <div className="flex justify-center md:hidden">
-          <button
-            type="button"
-            onClick={() => setShowAllTables(true)}
-            className="form-button w-full max-w-xs"
-          >
+          <button type="button" onClick={() => setShowAllTables(true)} className="form-button w-full max-w-xs">
             Show all tables
           </button>
         </div>
