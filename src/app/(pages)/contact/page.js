@@ -34,7 +34,7 @@ export default function Contact() {
         body: JSON.stringify(newContactMessage),
       });
 
-      if (!res.ok) throw new Error("Failed to send message");
+      if (!res.ok) console.log("Failed to send message");
 
       setMessage("Your message is send, We will be in touch as soon as possible");
 

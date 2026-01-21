@@ -58,7 +58,7 @@ export default function BlogPostbyId() {
         body: JSON.stringify(newComment),
       });
 
-      if (!res.ok) throw new Error("Failed to send comment");
+      if (!res.ok) console.log("Failed to send comment");
       reset();
     } catch (error) {
       console.error(error);

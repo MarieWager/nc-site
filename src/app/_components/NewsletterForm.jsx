@@ -19,7 +19,7 @@ export default function NewsletterForm() {
         body: JSON.stringify({ email }),
       });
 
-      if (!res.ok) throw new Error("Failed to subscribe");
+      if (!res.ok) console.log("Failed to subscribe");
 
       setMessage("Thank you for subscribing!");
       setEmail("");

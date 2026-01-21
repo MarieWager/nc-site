@@ -57,7 +57,7 @@ export default function BookTable() {
         body: JSON.stringify(newReservation),
       });
 
-      if (!res.ok) throw new Error("Failed to send comment");
+      if (!res.ok) console.log("Failed to send comment");
 
       reset();
 
